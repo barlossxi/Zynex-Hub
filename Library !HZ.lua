@@ -4477,3 +4477,5 @@ do
 	end
 end
 
+return Fluent
+
