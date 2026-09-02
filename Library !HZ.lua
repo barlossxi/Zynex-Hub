@@ -321,8 +321,8 @@ local aa = {
 				end
 			local r, s =
 				function(r)
-					local s = k()
-					local t, u = r.AbsoluteSize - Vector2.new(s, s), r.AbsolutePosition + Vector2.new(s / 2, s / 2)
+					-- 使用完整的 UI 矩形投影，让 Glass 层覆盖整个窗口而不会留下未模糊的边缘。
+					local t, u = r.AbsoluteSize, r.AbsolutePosition
 					p(t, u)
 					task.spawn(q)
 				end, function()
@@ -373,10 +373,12 @@ local aa = {
 		local j = h.New
 		return function(k)
 			local l = {}
+			-- 裁剪亚克力纹理，避免放大的阴影层越过窗口边界造成漏光。
 			l.Frame = j(
 				"Frame",
 				{
 					Size = UDim2.fromScale(1, 1),
+					ClipsDescendants = true,
 					BackgroundTransparency = 0.9,
 					BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 					BorderSizePixel = 0,
